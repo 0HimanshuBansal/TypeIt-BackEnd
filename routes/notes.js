@@ -52,6 +52,7 @@ router.put('/updateNote/:id', fetchuser,
             if (description) newNote.description = description;
             if (tag) newNote.tag = tag;
             if (bgColor) newNote.bgColor = bgColor;
+            newNote.date = Date.now();
             note = await Notes.findByIdAndUpdate(req.params.id, {$set: newNote}, {new: true});
             //new -> if there would be any new field found while updating, it will add it
             res.json({note});
