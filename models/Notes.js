@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+// const d = new Date();
+// let currDate = d.toLocaleTimeString();
+
 const NotesSchema = new Schema ({
     user:{
         type: mongoose.Schema.Types.ObjectId,
@@ -23,8 +26,8 @@ const NotesSchema = new Schema ({
         default: "light"
     },
     date:{
-        type: Date,
-        default: Date.now
+        type: String,
+        default: Date.toLocaleTimeString()
     },
 });
 

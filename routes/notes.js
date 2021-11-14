@@ -23,9 +23,9 @@ router.post('/addNote', fetchuser,
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) return res.status(400).json({errors: errors.array()});
-            const {title, description, tag, bgColor} = req.body;
+            const {title, description, tag, bgColor, date} = req.body;
 
-            const note = await new Notes({user: req.user.id, title, description, tag, bgColor});
+            const note = await new Notes({user: req.user.id, title, description, tag, bgColor, date});
             const savedNode = await note.save();
             res.json(savedNode);
         } catch (error) {
@@ -37,7 +37,7 @@ router.post('/addNote', fetchuser,
 router.put('/updateNote/:id', fetchuser,
     async (req, res) => {
         try {
-            const {title, description, tag, bgColor} = req.body;
+            const {title, description, tag, bgColor, date} = req.body;
             //check if note exists
             let note = await Notes.findById(req.params.id);
             if (!note)
@@ -52,7 +52,8 @@ router.put('/updateNote/:id', fetchuser,
             if (description) newNote.description = description;
             if (tag) newNote.tag = tag;
             if (bgColor) newNote.bgColor = bgColor;
-            newNote.date = Date.now();
+            newNote.date = date;
+
             note = await Notes.findByIdAndUpdate(req.params.id, {$set: newNote}, {new: true});
             //new -> if there would be any new field found while updating, it will add it
             res.json({note});
