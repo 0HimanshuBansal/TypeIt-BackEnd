@@ -27,7 +27,7 @@ const NotesSchema = new Schema ({
     },
     date:{
         type: String,
-        default: Date.toLocaleTimeString()
+        default: Date.toLocaleTimeString
     },
 });
 
