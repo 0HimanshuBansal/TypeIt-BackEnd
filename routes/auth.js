@@ -17,7 +17,7 @@ router.post(
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty())
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({success: false, errors: errors.array() });
         try {
             let user = await User.findOne({ email: req.body.email })
             if (user) return res.status(400).json({ success: false, error: "User with same E-mail already exists" })
@@ -62,10 +62,10 @@ router.post(
                     success: true,
                     token: jwtToken
                 });
-            } else return res.status(400).json({ error: "Failed to LogIn, please try again" })
+            } else return res.status(400).json({success: false, error: "Failed to LogIn, please try again" })
         } catch (error) {
             // console.log(error.message);
-            res.status(500).send({ success: true, error: "Internal Server Error" });
+            res.status(500).send({ success: false, error: "Internal Server Error" });
         }
     })
 
